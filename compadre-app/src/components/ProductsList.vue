@@ -21,13 +21,13 @@
                   <span class="icon">
                     <i class="fas fa-comment-dollar"></i>
                   </span>
-                  <span>{{ product.price }}</span>
+                  <span>{{ product.price === 0 ? "Free" : "CAD " + product.price }}</span>
                 </span>
               </div>
               <div class="is-flex">
                 <span class="icon-text has-text-warning">
                   <span class="icon">
-                    <i class="fas fa-comment-dollar"></i>
+                    <i class="fas fa-store"></i>
                   </span>
                   <span>{{ product.source }}</span>
                 </span>
