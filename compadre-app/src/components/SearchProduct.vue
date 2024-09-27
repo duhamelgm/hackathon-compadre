@@ -9,21 +9,36 @@ import ProductsList from "./ProductsList.vue";
         <img :src="imagePreview" alt="Image preview" style="max-width: 300px; max-height: 300px;" />
       </figure>
 
-      <div class="file is-info is-boxed">
+      <div class="file is-info is-boxed" :style="{ opacity: loading ? 0.2 : 1 }">
         <label class="file-label">
           <input class="file-input" type="file" name="product" @change="handleProductUpload" />
           <span class="file-cta">
             <span class="file-icon">
               <i class="fas fa-cloud-upload-alt"></i>
             </span>
-            <span class="file-label"> Upload a photo </span>
+            <span class="file-label">{{ loadingProducts ? "Uploading..." : "Upload a photo" }}</span>
           </span>
         </label>
       </div>
     </div>
 
+    <div class="is-flex is-flex-wrap-wrap">
+      <progress v-if="loadingProducts" class="progress is-medium is-info ml-2 mr-2" max="100" />
+      <section v-if="loadingProducts" class="hero">
+        <div class="hero-body">
+          <p class="title">Finding the closes listings for you!</p>
+          <p class="subtitle mt-2"><i v-if="loadingProducts" class="is-success fas fa-check-square" /><span v-else
+              class="loader mr-2" />Processing the images informations
+          </p>
+          <p class="subtitle mt-2"><span v-if="loadingProducts" class="loader mr-2" />Comparing with the online listings
+          </p>
+          <p class="subtitle mt-2"><span v-if="loadingProducts" class="loader mr-2" />Finding the top & closest ads</p>
+        </div>
+      </section>
+    </div>
+
     <div class="is-flex is-flex-direction-row">
-      <div v-if="file" class="is-flex is-align-items-center" :style="{ gap: '2em' }">
+      <div v-if="file && !loadingProducts" class="is-flex is-align-items-center" :style="{ gap: '2em' }">
         <div class="is-flex">
           <ProductsList :products="products" v-if="products.length > 0" />
         </div>
@@ -71,6 +86,27 @@ import ProductsList from "./ProductsList.vue";
 
 .file-label {
   text-align: center;
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 5px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
 
