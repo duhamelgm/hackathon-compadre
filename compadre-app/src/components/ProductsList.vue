@@ -3,9 +3,9 @@
     <div class="products-content">
       <div class="content">
         <div class="is-flex is-flex-wrap-wrap" style="gap: 2rem;">
-          <div class="is-flex is-flex-direction-row" v-for="(product, index) in products" :key="index">
+          <div class="is-flex is-flex-direction-row productBlock" v-for="(product, index) in products" :key="index">
             <div class="is-flex">
-              <img :src="product.imageUrl" style="width: 128px; height: 128px" />
+              <img :src="product.imageUrl" width="100%" style="min-width: 120px; max-width: 120px;" class="imgBox" />
             </div>
             <div class="is-flex is-flex-direction-column">
               <div class="is-flex">
@@ -52,7 +52,6 @@
 </style>
 
 <script>
-
 export default {
   props: {
     products: {
@@ -62,3 +61,14 @@ export default {
   },
 }
 </script>
+
+<style scope>
+.imgBox {
+  border-radius: 1rem;
+  object-fit: fill;
+}
+
+.productBlock {
+  gap: 1rem;
+}
+</style>
