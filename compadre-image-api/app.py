@@ -1,10 +1,11 @@
-from fastapi import APIRouter, UploadFile, FastAPI, status, HTTPException
+from fastapi import APIRouter, UploadFile, FastAPI, status, HTTPException, Request
 from starlette.responses import JSONResponse
 from config.validation_config import OutputFormat
 from model.image_recognition import ImageDescriptor
 import io
 from PIL import Image
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import PlainTextResponse
 
 # create the app
 path = "/compadre-image-recognition"
