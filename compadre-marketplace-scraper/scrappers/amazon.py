@@ -30,7 +30,7 @@ async def run(playwright: Playwright, query: str):
         title = product.locator("h2 a").first
         if title:
           product_result['title'] = await title.text_content()
-          product_result["link"] = "amazon.ca" + await title.get_attribute("href")
+          product_result["link"] = "https://amazon.ca" + await title.get_attribute("href")
 
         price = ""
         price_whole = product.locator(".a-price-whole").first
