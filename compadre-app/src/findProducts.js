@@ -17,8 +17,8 @@ function formatPrice(price) {
 
 export const findProducts = {
     methods: {
-        findProducts: async function (file, cityName) {
-            const description = await this.getImageDescription(file);
+        findProducts: async function (image, cityName) {
+            const description = await this.getImageDescription(image);
             const facebookMarketplaceResults = this.getFacebookMarketplaceProducts(description, cityName);
             const amazonResults = this.getAmazonProducts(description, cityName);
             const results = [];
@@ -57,9 +57,9 @@ export const findProducts = {
 
             return results;
         },
-        getImageDescription: async function (file) {
+        getImageDescription: async function (image) {
             const formData = new FormData();
-            formData.append("file", file);
+            formData.append("file", image);
             const response = await axios.post(brainUrl, formData, {
                 headers: {
                     "Content-Type" : "multipart/form-data"
