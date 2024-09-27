@@ -16,15 +16,17 @@ import ProductsList from "./ProductsList.vue";
             <span class="file-icon">
               <i class="fas fa-cloud-upload-alt"></i>
             </span>
-            <span class="file-label">{{ loadingProducts ? "Uploading..." : "Upload a photo" }}</span>
+            <span class="file-label">{{ file && (!dataState.descriptionLoaded || !dataState.adsLoaded ||
+              !dataState.rankingCompleted) ? "Uploading..." : "Upload a photo" }}</span>
           </span>
         </label>
       </div>
     </div>
 
-    <div class="is-flex is-flex-wrap-wrap">
-      <progress v-if="loadingProducts" class="progress is-medium is-info ml-2 mr-2" max="100" />
-      <section v-if="loadingProducts" class="hero">
+    <div v-if="file && (!dataState.descriptionLoaded || !dataState.adsLoaded || !dataState.rankingCompleted)"
+      class="is-flex is-flex-wrap-wrap">
+      <progress class="progress is-medium is-info ml-2 mr-2" max="100" />
+      <section class="hero pb-6">
         <div class="hero-body pt-2">
           <p class="title">We're working on recommendations for you!</p>
           <p class="subtitle mt-4"><i v-if="dataState.descriptionLoaded"
@@ -42,8 +44,9 @@ import ProductsList from "./ProductsList.vue";
       </section>
     </div>
 
-    <div class="is-flex is-flex-direction-row">
-      <div v-if="file && !loadingProducts" class="is-flex is-align-items-center" :style="{ gap: '2em' }">
+    <div v-if="file && dataState.descriptionLoaded && dataState.adsLoaded && dataState.rankingCompleted"
+      class="is-flex is-flex-direction-row">
+      <div class="is-flex is-align-items-center" :style="{ gap: '2em' }">
         <div class="is-flex">
           <ProductsList :products="products" v-if="products.length > 0" />
         </div>
