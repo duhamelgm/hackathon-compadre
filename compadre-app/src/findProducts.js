@@ -1,13 +1,7 @@
 import axios from "axios";
 import priceParser from "price-parser"
 import parsePrice from "parse-price"
-
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*' // for all requests
-
-const brainUrl = "https://compadre-image-recognition-e711182a825b.herokuapp.com/compadre-image-recognition/generate";
-const facebookMarketPlaceUrl = "http://192.168.0.187:8000/crawl_facebook_marketplace";
-// const amazonUrl = "https://35e8-2001-18c0-24-9b00-6d15-f928-ebc8-6051.ngrok-free.app/crawl_amazon";
-const amazonUrl = "http://192.168.0.187:8000/crawl_amazon";
+import {amazonUrl, brainUrl, facebookMarketPlaceUrl} from "@/constant.js";
 
 function formatPrice(price) {
     const parsedPrice = priceParser.parseFirst(price);
@@ -17,8 +11,10 @@ function formatPrice(price) {
 
 export const findProducts = {
     methods: {
-        findProducts: async function (image, cityName) {
+        findProducts: async function (image, cityName, updateDataState) {
             const description = await this.getImageDescription(image);
+            updateDataState({descriptionLoaded: true});
+
             const facebookMarketplaceResults = this.getFacebookMarketplaceProducts(description, cityName);
             const amazonResults = this.getAmazonProducts(description, cityName);
             const results = [];
@@ -54,7 +50,7 @@ export const findProducts = {
                     }
                 });
             });
-
+            updateDataState({adsLoaded: true});
             return results;
         },
         getImageDescription: async function (image) {
