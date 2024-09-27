@@ -1,15 +1,26 @@
 <template>
-  <div class="file is-info is-boxed">
-    <label class="file-label">
-      <input class="file-input" type="file" name="product" @change="handleProductUpload" />
-      <span class="file-cta">
-        <span class="file-icon">
-          <i class="fas fa-cloud-upload-alt"></i>
-        </span>
-        <span class="file-label"> Upload a photo </span>
-      </span>
-      <span class="file-name"> No photo uploaded </span>
-    </label>
+  <div class="container">
+    <div class="grid">
+      <div class="cell">
+        <div class="file is-info is-boxed">
+          <label class="file-label">
+            <input class="file-input" type="file" name="product" @change="handleProductUpload" />
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+              </span>
+              <span class="file-label"> Upload a photo </span>
+            </span>
+            <span class="file-name"> No photo uploaded </span>
+          </label>
+        </div>
+      </div>
+      <div class="cell">
+        <figure v-if="imagePreview" class="image is-square">
+          <img :src="imagePreview" alt="Image preview" style="max-width: 300px; max-height: 300px;" />
+        </figure>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,13 +29,20 @@ export default {
   data() {
     return {
       file: null,
+      imagePreview: null,
     };
   },
   methods: {
     handleProductUpload(event) {
-      debugger;
-      this.file = event.target.files[0];
-    }
+      const selectedFile = event.target.files[0];
+      if (selectedFile) {
+        this.file = selectedFile;
+        this.createImagePreview(selectedFile);
+      }
+    },
+    createImagePreview(file) {
+      this.imagePreview = URL.createObjectURL(file);
+    },
   },
   watch: {
     file(newFile) {
@@ -32,6 +50,11 @@ export default {
         console.log("File changed: ", newFile.name)
       }
     }
-  }
+  },
+  beforeDestroy() {
+    if (this.imagePreview) {
+      URL.revokeObjectURL(this.imagePreview);
+    }
+  },
 }
 </script>
