@@ -36,10 +36,10 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -48,7 +48,7 @@ app.add_middleware(
 # Define a function to be executed when the endpoint is called.
 def root():
     # Return a message.
-    return {"message": "Welcome to Passivebot's Facebook Marketplace API. Documentation is currently being worked on along with the API. Some planned features currently in the pipeline are a ReactJS frontend, MongoDB database, and Google Authentication."}
+    return {"message": "Welcome to Compadre's Marketplace API. Documentation is currently being worked on along with the API."}
 
     # TODO - Add documentation to the API.
     # TODO - Add a React frontend to the API.
@@ -112,10 +112,5 @@ def return_ip_information():
 
 if __name__ == "__main__":
 
-    # Run the app.
-    uvicorn.run(
-        # Specify the app as the FastAPI app.
-        'app:app',
-        host='127.0.0.1',
-        port=8000
-    )
+    # Run the app
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))

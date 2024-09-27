@@ -31,7 +31,7 @@ def main(city: str, query: str):
   # Initialize the session using Playwright.
   with sync_playwright() as p:
       # Open a new browser page.
-      browser = p.chromium.launch(headless=False)
+      browser = p.chromium.launch(headless=True)
       page = browser.new_page()
       # Navigate to the URL.
       page.goto(initial_url)
@@ -50,9 +50,9 @@ def main(city: str, query: str):
       # Wait for the page to load.
       time.sleep(2)
       # Infinite scroll to the bottom of the page until the loop breaks.
-      for _ in range(5):
-            page.keyboard.press('End')
-            time.sleep(2)
+      #for _ in range(5):
+      #      page.keyboard.press('End')
+      #      time.sleep(2)
       html = page.content()
       soup = BeautifulSoup(html, 'html.parser')
       parsed = []
@@ -60,16 +60,22 @@ def main(city: str, query: str):
       print('listings find:'+str(len(listings)))
       for listing in listings:
           try:
-              # Get the item image.
-              image = listing.find('img', class_='xt7dq6l xl1xv1r x6ikm8r x10wlt62 xh8yej3')['src']
-              print('image: '+image)
-              # Get the item title from span.
-              title = listing.find('span', 'x1lliihq x6ikm8r x10wlt62 x1n2onr6').text
-              print('title: '+title)                
-              # Get the item price.
-              price = listing.find('span', 'x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xudqn12 x676frb x1lkfr7t x1lbecb7 x1s688f xzsf02u').text
-              print('price: '+price)       
+            image = None
+            if listing.find('img', class_='xt7dq6l xl1xv1r x6ikm8r x10wlt62 xh8yej3'):
+                image = listing.find('img', class_='xt7dq6l xl1xv1r x6ikm8r x10wlt62 xh8yej3')['src']
+            # Get the item title from span.
+            title=None
+            if listing.find('span', 'x1lliihq x6ikm8r x10wlt62 x1n2onr6'):
+                title = listing.find('span', 'x1lliihq x6ikm8r x10wlt62 x1n2onr6').text
+            # Get the item price.
+            price = "0"
+            if listing.find('span', 'x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xudqn12 x676frb x1lkfr7t x1lbecb7 x1s688f xzsf02u'):
+                price = listing.find('span', 'x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xudqn12 x676frb x1lkfr7t x1lbecb7 x1s688f xzsf02u').text
               # Get the item URL.
+            post_url = None
+            if listing.find('a', class_='x1i10hfl xjbqb8w x1ejq31n xd10rxx x1sy0etr x17r0tee x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz x1heor9g x1sur9pj xkrqix3 x1lku1pv'):
+                post_url = listing.find('a', class_='x1i10hfl xjbqb8w x1ejq31n xd10rxx x1sy0etr x17r0tee x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz x1heor9g x1sur9pj xkrqix3 x1lku1pv')['href']
+
               #post_url = listing.find('a', class_='x1i10hfl xjbqb8w x1ejq31n xd10rxx x1sy0etr x17r0tee x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz x1heor9g x1sur9pj xkrqix3 x1s688f x1lku1pv')
               #post_url = listing.find('a', class_='x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz x1heor9g x1lku1pv')['href']
               #print('post_url: '+post_url)       
@@ -80,14 +86,13 @@ def main(city: str, query: str):
               #print('location: '+location)       
 
               # Append the parsed data to the list.
-              parsed.append({
-                  'source': 'facebook',
-                  'image': image,
-                  'title': title,
-                  'price': price,
-                  #'post_url': post_url,
-                  'location': city
-              })
+            parsed.append({
+                'image': image,
+                'title': title,
+                'price': price,
+                'post_url': post_url,
+                'location': city
+            })
           except:
               pass
       # Close the browser.
@@ -96,11 +101,11 @@ def main(city: str, query: str):
       result = []
       for item in parsed:
           result.append({
-              'name': item['title'],
+              'source': 'marketplace',
               'price': item['price'],
               'location': item['location'],
               'title': item['title'],
               'image': item['image'],
-              #'link': item['post_url']
+              'link': item['post_url']
           })
       return result

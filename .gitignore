@@ -65,6 +65,7 @@ bundler_stubs/
 
 # Dotenv & secrets
 .env
+.venv
 .env.production
 .google-cloud-credentials.json
 .github/botloc.token
