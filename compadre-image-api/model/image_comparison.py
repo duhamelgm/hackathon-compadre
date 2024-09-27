@@ -1,4 +1,3 @@
-from skimage.metrics import structural_similarity as ssim 
 import numpy as np
 import cv2
 import requests
@@ -41,27 +40,7 @@ class ImageComparator:
         try:
             return cv2.resize(image,(base_image.shape[1::-1]),interpolation=cv2.INTER_AREA)
         except Exception as e:
-            print(str(e))
-    
-    # def compare(self,base_image,image_url_list):
-    #     base_image = ImageComparator._image_read(base_image)
-    #     image_list = [
-    #         ImageComparator._load_image_from_url(elem["imageUrl"]) for elem in image_url_list
-    #     ]
-        
-    #     image_list = [
-    #      ImageComparator._resize_image(base_image, image) for image in image_list   
-    #     ]
-        
-    #     base_image = ImageComparator._turn_gray(base_image)
-        
-    #     image_list = [
-    #      ImageComparator._turn_gray(image) for image in image_list   
-    #     ]
-    #     for index in range(len(image_url_list)):
-    #         image_url_list[index]["MSE"] = ImageComparator._mean_squared_error(base_image, image_list[index])
-            
-    #     return image_url_list
+            logging.info(f"An unexpected error has occured: {e}")
     def compare(self, base_image_data, image_url_list):
         logging.info("compare")
         base_image = cv2.imdecode(np.frombuffer(base_image_data.getvalue(), np.uint8), cv2.IMREAD_COLOR)
