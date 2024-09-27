@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { findProducts } from "../findProducts.js"
+
 export default {
   data() {
     return {
@@ -38,12 +40,14 @@ export default {
       if (selectedFile) {
         this.file = selectedFile;
         this.createImagePreview(selectedFile);
+        this.findProducts(selectedFile, "montreal")
       }
     },
     createImagePreview(file) {
       this.imagePreview = URL.createObjectURL(file);
     },
   },
+  mixins: [findProducts],
   watch: {
     file(newFile) {
       if (newFile) {
