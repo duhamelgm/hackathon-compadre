@@ -19,6 +19,7 @@ gunicorn = "^23.0.0"
 uvicorn = "^0.30.6"
 requests = "^2.32.3"
 python-multipart = "^0.0.10"
+pyfftw = "^0.14.0"
 
 
 [tool.poetry.group.dev.dependencies]
