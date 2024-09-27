@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "npm run build && node server.js"
   },
   "dependencies": {
     "bulma": "^1.0.2",
+    "express": "^4.21.0",
+    "serve-static": "^1.16.2",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
