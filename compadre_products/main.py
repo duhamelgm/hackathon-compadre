@@ -1,8 +1,9 @@
 from fastapi import FastAPI
+from compadre_products.scrappers import amazon
 
 app = FastAPI()
 
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return await amazon.main()
