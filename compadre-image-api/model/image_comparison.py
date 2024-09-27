@@ -52,10 +52,16 @@ class ImageComparator:
         base_shape = base_image.shape
         
         for index in range(len(image_list)):
-            image_list[index] = self._turn_gray(cv2.resize(image_list[index], (base_shape[1], base_shape[0])))
-            
+            try:
+                image_list[index] = self._turn_gray(cv2.resize(image_list[index], (base_shape[1], base_shape[0])))
+            except:
+                image_list[index] = None
+                
         for index in range(len(image_url_list)):
-            mse_value = self._mean_squared_error(base_image, image_list[index])
-            image_url_list[index]["MSE"] = mse_value
+            if image_list[index] is not None:
+                mse_value = self._mean_squared_error(base_image, image_list[index])
+                image_url_list[index]["MSE"] = mse_value
+            else:
+                image_url_list[index]["MSE"] = 100000000000
             
         return image_url_list
