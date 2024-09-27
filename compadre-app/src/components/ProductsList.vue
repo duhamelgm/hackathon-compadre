@@ -15,6 +15,11 @@
                       <i class="fas fa-tag"></i>
                     </span>
                     <span>{{ product.name }}</span>
+                    <span v-if="[0, 1, 2].includes(index)" class="icon-text has-text-warning">
+                      <span class="icon">
+                        <i class="fas fa-star"></i>
+                      </span>
+                    </span>
                   </span>
                 </div>
                 <div class="is-flex">
