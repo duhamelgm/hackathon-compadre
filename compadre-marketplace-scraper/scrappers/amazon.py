@@ -55,6 +55,6 @@ async def run(playwright: Playwright):
 
     return result
 
-async def main():
+async def scrap():
     async with async_playwright() as playwright:
         return await run(playwright)
