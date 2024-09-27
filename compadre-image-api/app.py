@@ -1,7 +1,15 @@
-from fastapi import APIRouter, UploadFile, FastAPI, status, HTTPException, Request
+from fastapi import APIRouter, UploadFile, FastAPI, status, HTTPException, Form, Request
 from starlette.responses import JSONResponse
-from config.validation_config import OutputFormat
-from model.image_recognition import ImageDescriptor
+from config.validation_config import (
+    DescriptionOutputFormat,
+    # ComparatorInputFormat,
+    ComparatorOutputFormat
+)
+import json
+import logging
+from ast import literal_eval
+from model.image_description import ImageDescriptor
+from model.image_comparison import ImageComparator
 import io
 import sys
 from PIL import Image
@@ -39,7 +47,7 @@ async def health():
 
 
 @router.post(
-    "/generate", status_code=status.HTTP_200_OK, response_model=OutputFormat
+    "/generate", status_code=status.HTTP_200_OK, response_model=DescriptionOutputFormat
 )
 async def predict(file: UploadFile):
     try:
@@ -66,11 +74,29 @@ async def custom_exception_handler(request: Request, exc: Exception) -> PlainTex
         f'{exception_traceback}'
     )
     return PlainTextResponse(str(exc), status_code=500)
+@router.post(
+    "/compare", status_code=status.HTTP_200_OK, response_model=ComparatorOutputFormat
+)
+
+async def predict(file:UploadFile, payload: str = Form(...)):
+    try:
+        return _compare(file, payload)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 app.include_router(router)
 
 
 def _predict(file: UploadFile):
-    agent = ImageDescriptor()
+    image_descriptor = ImageDescriptor()
     image_data = io.BytesIO(file.file.read())
-    return {"description": agent.describe(image_data)}
+    return {"description": image_descriptor.describe(image_data)}
+
+def _compare(file:UploadFile ,payload):
+    logging.info("_compare")
+    image_data = io.BytesIO(file.file.read())
+    file.file.close()
+    image_comparator = ImageComparator()
+    payload = literal_eval(payload)
+    return {"response": image_comparator.compare(image_data, payload["image_list"])}
+    
