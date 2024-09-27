@@ -108,4 +108,4 @@ def main(city: str, query: str):
               'image': item['image'],
               'link': item['post_url']
           })
-      return result
+      return result[:10]

@@ -14,7 +14,7 @@ async def run(playwright: Playwright, query: str):
     )
     context.set_default_timeout(5000)
     page = await context.new_page()
-    await page.goto(f"https://www.amazon.com/s?k={urllib.parse.quote_plus(query)}&ref=nb_sb_noss", timeout=30000)
+    await page.goto(f"https://www.amazon.ca/s?k={urllib.parse.quote_plus(query)}&ref=nb_sb_noss", timeout=30000)
 
     products = page.locator("//div[starts-with(@data-cel-widget, 'search_result_') and translate(substring(@data-cel-widget, string-length('search_result_') + 1), '0123456789', '') = '']")
     result = []
@@ -30,7 +30,7 @@ async def run(playwright: Playwright, query: str):
         title = product.locator("h2 a").first
         if title:
           product_result['title'] = await title.text_content()
-          product_result["link"] = "amazon.com" + await title.get_attribute("href")
+          product_result["link"] = "amazon.ca" + await title.get_attribute("href")
 
         price = ""
         price_whole = product.locator(".a-price-whole").first
@@ -54,7 +54,7 @@ async def run(playwright: Playwright, query: str):
     # other actions...
     await browser.close()
 
-    return result
+    return result[:10]
 
 async def scrap(query: str):
     async with async_playwright() as playwright:
