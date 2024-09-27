@@ -13,9 +13,9 @@ export const findProducts = {
         findProducts: async function (image, cityName, updateDataState) {
             let results = [];
 
-      try {
-        const description = await this.getImageDescription(image);
-        updateDataState({ descriptionLoaded: true });
+            try {
+                const description = await this.getImageDescription(image);
+                updateDataState({descriptionLoaded: true});
 
                 const facebookMarketplaceResults = this.getFacebookMarketplaceProducts(description, cityName);
                 const amazonResults = this.getAmazonProducts(description, cityName);
