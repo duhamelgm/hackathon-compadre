@@ -3,6 +3,7 @@ from starlette.responses import JSONResponse
 from config.validation_config import OutputFormat
 from model.image_recognition import ImageDescriptor
 import io
+import sys
 from PIL import Image
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
@@ -52,16 +53,16 @@ async def custom_exception_handler(request: Request, exc: Exception) -> PlainTex
     This middleware will log all unhandled exceptions.
     Unhandled exceptions are all exceptions that are not HTTPExceptions or RequestValidationErrors.
     """
-    logger.debug("Our custom unhandled_exception_handler was called")
+    print("Our custom unhandled_exception_handler was called")
     host = getattr(getattr(request, "client", None), "host", None)
     port = getattr(getattr(request, "client", None), "port", None)
     url = f"{request.url.path}?{request.query_params}" if request.query_params else request.url.path
     exception_type, exception_value, exception_traceback = sys.exc_info()
     exception_name = getattr(exception_type, "__name__", None)
-    logger.error(
+    print(
         f'{host}:{port} - "{request.method} {url}" 500 Internal Server Error <{exception_name}: {exception_value}>'
     )
-    logger.error(
+    print(
         f'{exception_traceback}'
     )
     return PlainTextResponse(str(exc), status_code=500)
