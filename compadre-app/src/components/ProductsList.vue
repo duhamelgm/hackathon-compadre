@@ -4,35 +4,37 @@
       <div class="content">
         <div class="is-flex is-flex-wrap-wrap" style="gap: 2rem;">
           <div class="is-flex is-flex-direction-row productBlock" v-for="(product, index) in products" :key="index">
-            <div class="is-flex">
-              <img :src="product.imageUrl" width="100%" style="min-width: 120px; max-width: 120px;" class="imgBox" />
-            </div>
-            <div class="is-flex is-flex-direction-column">
+            <a :href="product.url" target="_blank">
               <div class="is-flex">
-                <span class="icon-text has-text-info has-text-weight-semibold">
-                  <span class="icon">
-                    <i class="fas fa-tag"></i>
-                  </span>
-                  <span>{{ product.name }}</span>
-                </span>
+                <img :src="product.imageUrl" width="100%" style="min-width: 120px; max-width: 120px;" class="imgBox" />
               </div>
-              <div class="is-flex">
-                <span class="icon-text has-text-success">
-                  <span class="icon">
-                    <i class="fas fa-comment-dollar"></i>
+              <div class="is-flex is-flex-direction-column">
+                <div class="is-flex">
+                  <span class="icon-text has-text-info has-text-weight-semibold">
+                    <span class="icon">
+                      <i class="fas fa-tag"></i>
+                    </span>
+                    <span>{{ product.name }}</span>
                   </span>
-                  <span>{{ product.price === 0 ? "Free" : "CAD " + product.price }}</span>
-                </span>
-              </div>
-              <div class="is-flex">
-                <span class="icon-text has-text-warning">
-                  <span class="icon">
-                    <i class="fas fa-store"></i>
+                </div>
+                <div class="is-flex">
+                  <span class="icon-text has-text-success">
+                    <span class="icon">
+                      <i class="fas fa-comment-dollar"></i>
+                    </span>
+                    <span>{{ product.price === 0 ? "Free" : "CAD " + product.price }}</span>
                   </span>
-                  <span>{{ product.source }}</span>
-                </span>
+                </div>
+                <div class="is-flex">
+                  <span class="icon-text has-text-warning">
+                    <span class="icon">
+                      <i class="fas fa-store"></i>
+                    </span>
+                    <span>{{ product.source }}</span>
+                  </span>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>

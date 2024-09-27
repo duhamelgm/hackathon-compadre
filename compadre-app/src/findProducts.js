@@ -73,7 +73,7 @@ export const findProducts = {
                                 price: formatPrice(product.price),
                                 currency: "$CAD",
                                 imageUrl: product.image,
-                                url: "facebook.com" + product.link,
+                                url: product.link,
                                 source: product.source,
                             };
                             results.push(result);
