@@ -1,3 +1,6 @@
+<script setup>
+import ProductsList from "./ProductsList.vue";
+</script>
 <template>
   <div class="container">
     <div class="grid">
@@ -20,6 +23,7 @@
           <img :src="imagePreview" alt="Image preview" style="max-width: 300px; max-height: 300px;" />
         </figure>
       </div>
+      <ProductsList :products="products" v-if="products.length > 0" />
     </div>
   </div>
 </template>
@@ -32,6 +36,7 @@ export default {
     return {
       file: null,
       imagePreview: null,
+      products: [],
     };
   },
   methods: {
@@ -40,7 +45,10 @@ export default {
       if (selectedFile) {
         this.file = selectedFile;
         this.createImagePreview(selectedFile);
-        this.findProducts(selectedFile, "montreal")
+        this.loadingProducts = true;
+        this.findProducts(selectedFile, "montreal").then((data) => {
+          this.products = data;
+        }).finally(() => this.loadingProducts = false)
       }
     },
     createImagePreview(file) {
