@@ -1,10 +1,18 @@
-import axios from 'axios';
+import axios from "axios";
+import priceParser from "price-parser"
+import parsePrice from "parse-price"
 
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*' // for all requests
 
 const facebookMarketPlaceUrl = "http://192.168.0.187:8000/crawl_facebook_marketplace";
 // const amazonUrl = "https://35e8-2001-18c0-24-9b00-6d15-f928-ebc8-6051.ngrok-free.app/crawl_amazon";
 const amazonUrl = "http://192.168.0.187:8000/crawl_amazon";
+
+function formatPrice(price) {
+    const parsedPrice = priceParser.parseFirst(price);
+    const result = Math.max(parsedPrice ? parsedPrice.floatValue : 0, parsePrice(price));
+    return result;
+}
 
 export const findProducts = {
     methods: {
@@ -15,12 +23,12 @@ export const findProducts = {
             const results = [];
             await Promise.all([facebookMarketplaceResults, amazonResults]).then((responses) => {
                 responses.forEach((response) => {
-                    console.log(response.data);
                     if (response.config.url === facebookMarketPlaceUrl) {
                         response.data.forEach((product) => {
                             const result = {
                                 name: product.title,
-                                price: product.price,
+                                price: formatPrice(product.price),
+                                currency: "$CAD",
                                 imageUrl: product.image,
                                 url: "facebook.com" + product.link,
                                 source: product.source,
@@ -31,7 +39,8 @@ export const findProducts = {
                         response.data.forEach((product) => {
                             const result = {
                                 name: product.title,
-                                price: product.price,
+                                price: formatPrice(product.price),
+                                currency: "$USD",
                                 imageUrl: product.image,
                                 url: product.link,
                                 source: product.source,

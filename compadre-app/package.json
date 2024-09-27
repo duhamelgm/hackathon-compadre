@@ -13,6 +13,8 @@
     "axios": "1.7.7",
     "bulma": "^1.0.2",
     "express": "^4.21.0",
+    "parse-price": "1.1.8",
+    "price-parser": "3.4.0",
     "serve-static": "^1.16.2",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
