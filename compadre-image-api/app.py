@@ -58,6 +58,11 @@ async def predict(file: UploadFile):
 @router.post(
     "/compare", status_code=status.HTTP_200_OK, response_model=ComparatorOutputFormat
 )
+async def compare(file:UploadFile, payload: str = Form(...)):
+    try:
+        return _compare(file, payload)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.exception_handler(Exception)
 async def custom_exception_handler(request: Request, exc: Exception) -> PlainTextResponse:
@@ -78,12 +83,6 @@ async def custom_exception_handler(request: Request, exc: Exception) -> PlainTex
         f'{exception_traceback}'
     )
     return PlainTextResponse(str(exc), status_code=500)
-
-async def predict(file:UploadFile, payload: str = Form(...)):
-    try:
-        return _compare(file, payload)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
 
 app.include_router(router)
 

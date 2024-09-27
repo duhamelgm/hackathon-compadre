@@ -49,16 +49,29 @@ def root():
     # TODO - Add a MongoDB database to the API.
     # TODO - Add Google Authentication to the React frontend.
 
+cache = {}
+
 # Create a route to the return_data endpoint.
 @app.get("/crawl_facebook_marketplace")
 # Define a function to be executed when the endpoint is called.
 # Add a description to the function.
 def crawl_facebook_marketplace(city: str, query: str):
-    return facebook.main(city=city, query=query)
+    cache_key = f'{city}-{query}'
+    if cache_key in cache:
+        return cache[cache_key]
+
+    cache[cache_key] = facebook.main(city=city, query=query)
+    return cache[cache_key]
 
 @app.get("/crawl_amazon")
 async def crawl_amazon(query: str):
-    return await amazon.scrap(query=query)
+    cache_key = f'{query}'
+
+    if cache_key in cache:
+        return cache[cache_key]
+
+    cache[cache_key] = await amazon.scrap(query=query)
+    return cache[cache_key]
 
 # Create a route to the return_html endpoint.
 @app.get("/return_ip_information")
