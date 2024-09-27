@@ -15,14 +15,15 @@ export const findProducts = {
             const results = [];
             await Promise.all([facebookMarketplaceResults, amazonResults]).then((responses) => {
                 responses.forEach((response) => {
+                    console.log(response.data);
                     if (response.config.url === facebookMarketPlaceUrl) {
                         response.data.forEach((product) => {
                             const result = {
                                 name: product.title,
                                 price: product.price,
                                 imageUrl: product.image,
-                                url: "",
-                                source: "facebook Marketplace",
+                                url: "facebook.com" + product.link,
+                                source: product.source,
                             };
                             results.push(result);
                         });
@@ -30,10 +31,10 @@ export const findProducts = {
                         response.data.forEach((product) => {
                             const result = {
                                 name: product.title,
-                                price: 0,
-                                imageUrl: "",
+                                price: product.price,
+                                imageUrl: product.image,
                                 url: product.link,
-                                source: "amazon",
+                                source: product.source,
                             };
                             results.push(result);
                         });
