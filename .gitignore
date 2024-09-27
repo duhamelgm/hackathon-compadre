@@ -84,3 +84,7 @@ bundler_stubs/
 
 # PGSYNC
 .docker/advanced-search/schema/schema.json
+
+# Python stuff
+.venv
+__pycache__
