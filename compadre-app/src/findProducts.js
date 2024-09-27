@@ -110,9 +110,15 @@ export const findProducts = {
                 throw new Error("Compare query failed")
             });
             response.data.response.sort((a, b) => {
-                return a.MSE - b.MSE;
+                if ( a.MSE < b.MSE ){
+                    return -1;
+                }
+                if ( a.MSE > b.MSE ){
+                    return 1;
+                }
+                return 0;
             });
-
+            console.log(response.data.response);
             return response.data.response;
         },
     }
