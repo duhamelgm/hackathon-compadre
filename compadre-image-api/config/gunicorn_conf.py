@@ -1,6 +1,6 @@
 accesslog = "-"
 errorlog = "-"
-loglevel = "critical"
+loglevel = "debug"
 max_requests_jitter = 20
 max_requests = 200
 threads = 2

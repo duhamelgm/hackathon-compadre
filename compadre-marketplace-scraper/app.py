@@ -27,12 +27,6 @@ from scrappers import amazon
                  
 # Create an instance of the FastAPI class.
 app = FastAPI()
-# Configure CORS
-origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    "http://localhost:3000",
-]
 
 app.add_middleware(
     CORSMiddleware,
