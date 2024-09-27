@@ -1,6 +1,6 @@
 <template>
-  <section class="card">
-    <div class="card-content">
+  <section class="products">
+    <div class="products-content">
       <div class="content">
         <div class="is-flex is-flex-wrap-wrap" style="gap: 2rem;">
           <div class="is-flex is-flex-direction-row" v-for="(product, index) in products" :key="index">
@@ -39,6 +39,17 @@
     </div>
   </section>
 </template>
+
+<style>
+.products-content {
+  max-height: 90vh;
+  overflow: scroll;
+}
+
+.products-content .content {
+  margin: 0;
+}
+</style>
 
 <script>
 
