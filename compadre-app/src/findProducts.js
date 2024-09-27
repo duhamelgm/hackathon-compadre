@@ -41,7 +41,7 @@ export const findProducts = {
                             const result = {
                                 name: product.title,
                                 price: formatPrice(product.price),
-                                currency: "$USD",
+                                currency: "$CAD",
                                 imageUrl: product.image,
                                 url: product.link,
                                 source: product.source,
