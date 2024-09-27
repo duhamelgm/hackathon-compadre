@@ -118,7 +118,6 @@ export const findProducts = {
                 }
                 return 0;
             });
-            console.log(response.data.response);
             return response.data.response;
         },
     }
