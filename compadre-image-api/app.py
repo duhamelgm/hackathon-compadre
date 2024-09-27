@@ -5,6 +5,7 @@ from fastapi import (
     status,
 )
 from config.validation_config import OutputFormat
+from model.image_recognition import ImageRecognitionAgent
 
 # create the app
 path = "/compadre-image-recognition"
@@ -31,11 +32,14 @@ def health():
 
 @router.post(
     "/generate", status_code=status.HTTP_200_OK, response_model=OutputFormat
-)  # TODO depricate once we have migrated to the `1.0/generate` route
+)
 def predict(file: UploadFile):
-    pass
+    return _predict(file)
 
 
 
 app.include_router(router)
 
+def _predict(file):
+    agent = ImageRecognitionAgent()
+    return agent.predict(file)
