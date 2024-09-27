@@ -38,7 +38,10 @@ class ImageComparator:
         
     @staticmethod
     def _resize_image(base_image, image):
-        return cv2.resize(image,(base_image.shape[1::-1]),interpolation=cv2.INTER_AREA)
+        try:
+            return cv2.resize(image,(base_image.shape[1::-1]),interpolation=cv2.INTER_AREA)
+        except Exception as e:
+            print(str(e))
     
     # def compare(self,base_image,image_url_list):
     #     base_image = ImageComparator._image_read(base_image)
