@@ -2,27 +2,37 @@
   <section class="card">
     <div class="card-content">
       <div class="content">
-        <div class="columns">
-          <div v-for="(product, index) in products" :key="index" class="column">
-            <img :src="product.imageUrl" style="width: 128px; height: 128px" />
-            <span class="icon-text has-text-info has-text-weight-semibold">
-              <span class="icon">
-                <i class="fas fa-tag"></i>
-              </span>
-              <span>{{ product.name }}</span>
-            </span>
-            <span class="icon-text has-text-success">
-              <span class="icon">
-                <i class="fas fa-comment-dollar"></i>
-              </span>
-              <span>{{ product.price }}</span>
-            </span>
-            <span class="icon-text has-text-warning">
-              <span class="icon">
-                <i class="fas fa-comment-dollar"></i>
-              </span>
-              <span>{{ product.location }}</span>
-            </span>
+        <div class="is-flex is-flex-wrap-wrap" style="gap: 2rem;">
+          <div class="is-flex is-flex-direction-row" v-for="(product, index) in products" :key="index">
+            <div class="is-flex">
+              <img :src="product.imageUrl" style="width: 128px; height: 128px" />
+            </div <div class="is-flex is-flex-direction-column">
+            <div class="is-flex is-flex-direction-column">
+              <div class="is-flex">
+                <span class="icon-text has-text-info has-text-weight-semibold">
+                  <span class="icon">
+                    <i class="fas fa-tag"></i>
+                  </span>
+                  <span>{{ product.name }}</span>
+                </span>
+              </div>
+              <div class="is-flex">
+                <span class="icon-text has-text-success">
+                  <span class="icon">
+                    <i class="fas fa-comment-dollar"></i>
+                  </span>
+                  <span>{{ product.price }}</span>
+                </span>
+              </div>
+              <div class="is-flex">
+                <span class="icon-text has-text-warning">
+                  <span class="icon">
+                    <i class="fas fa-comment-dollar"></i>
+                  </span>
+                  <span>{{ product.source }}</span>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
