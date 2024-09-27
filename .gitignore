@@ -88,3 +88,6 @@ bundler_stubs/
 # Python stuff
 .venv
 __pycache__
+
+# Dev local files
+compadre-image-api/tmp/*

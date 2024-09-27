@@ -1,10 +1,14 @@
 import requests
+from dotenv import load_dotenv
+import os
+from model.config.prompt import system_message
+load_dotenv()
 
 class OpenAIAgent:
-    def __init__(self, api_key) -> None:
+    def __init__(self) -> None:
         self.headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {api_key}"
+            "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}"
             }
     
     
@@ -14,12 +18,12 @@ class OpenAIAgent:
                 "model": "gpt-4o-mini",
                 "messages": [
                     {
+                    "role": "system",
+                    "content": system_message
+                    },
+                    {
                     "role": "user",
                     "content": [
-                        {
-                        "type": "text",
-                        "text": "Can you described the most prominent object in this image?"
-                        },
                         {
                         "type": "image_url",
                         "image_url": {
@@ -34,4 +38,4 @@ class OpenAIAgent:
         
     def make_api_call(self,base64image):
         response = requests.post("https://api.openai.com/v1/chat/completions", headers=self.headers, json=OpenAIAgent._generate_payload(base64image))
-        return response.json()
+        return response.json()["choices"][0]["message"]["content"]

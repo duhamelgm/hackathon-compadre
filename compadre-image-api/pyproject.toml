@@ -8,12 +8,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-transformers = "^4.45.1"
-einops = "^0.8.0"
-torchvision = "^0.19.1"
 pydantic = "^2.9.2"
 fastapi = "^0.115.0"
 openai = "^1.50.0"
+python-dotenv = "^1.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
