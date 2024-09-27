@@ -46,7 +46,7 @@ export default {
         this.file = selectedFile;
         this.createImagePreview(selectedFile);
         this.loadingProducts = true;
-        this.findProducts(selectedFile, "montreal").then((data) => {
+        this.findProducts(selectedFile, "Montréal").then((data) => {
           this.products = data;
         }).finally(() => this.loadingProducts = false)
       }
