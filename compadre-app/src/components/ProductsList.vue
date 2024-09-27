@@ -22,7 +22,7 @@
                     <span class="icon">
                       <i class="fas fa-comment-dollar"></i>
                     </span>
-                    <span>{{ product.price === 0 ? "Free" : "CAD " + product.price }}</span>
+                    <span>{{ product.price === 0 ? "Free" : "$ " + product.price }}</span>
                   </span>
                 </div>
                 <div class="is-flex">
