@@ -4,7 +4,7 @@ import parsePrice from "parse-price"
 
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*' // for all requests
 
-const brainUrl = "https://3f43-2001-18c0-24-9b00-41bf-46c9-3c85-52a2.ngrok-free.app/compadre-image-recognition/generate";
+const brainUrl = "https://compadre-image-recognition-e711182a825b.herokuapp.com/compadre-image-recognition/generate";
 const facebookMarketPlaceUrl = "http://192.168.0.187:8000/crawl_facebook_marketplace";
 // const amazonUrl = "https://35e8-2001-18c0-24-9b00-6d15-f928-ebc8-6051.ngrok-free.app/crawl_amazon";
 const amazonUrl = "http://192.168.0.187:8000/crawl_amazon";
