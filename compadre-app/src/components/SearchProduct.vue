@@ -6,8 +6,8 @@ import ProductsList from "./ProductsList.vue";
   <div class="container">
     <div class="is-flex is-flex-direction-row">
       <div v-if="file" class="is-flex is-align-items-center" :style="{ gap: '2em' }">
-        <div class="is-flex is-flex-direction-column is-align-items-center">
-          <label class="is-flex">Product</label>
+        <div class="is-flex is-flex-direction-column is-align-self-flex-start">
+          <label class="is-flex is-align-self-center">Product</label>
           <figure class="is-flex" v-if="imagePreview">
             <img :src="imagePreview" alt="Image preview" style="max-width: 300px; max-height: 300px;" />
           </figure>
