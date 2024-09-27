@@ -1,10 +1,24 @@
 <script setup>
 import ProductsList from "./ProductsList.vue";
 </script>
+
 <template>
   <div class="container">
-    <div class="grid">
-      <div class="cell">
+    <div class="is-flex is-flex-direction-row">
+      <div v-if="file" class="is-flex is-align-items-center" :style="{ gap: '2em' }">
+        <div class="is-flex is-flex-direction-column is-align-items-center">
+          <label class="is-flex">Product</label>
+          <figure class="is-flex" v-if="imagePreview">
+            <img :src="imagePreview" alt="Image preview" style="max-width: 300px; max-height: 300px;" />
+          </figure>
+          <p v-else>No image preview available.</p>
+        </div>
+        <div class="is-flex">
+          <ProductsList :products="products" v-if="products.length > 0" />
+        </div>
+      </div>
+
+      <div v-else class="is-flex is-justify-content-center is-align-items-center">
         <div class="file is-info is-boxed">
           <label class="file-label">
             <input class="file-input" type="file" name="product" @change="handleProductUpload" />
@@ -18,12 +32,6 @@ import ProductsList from "./ProductsList.vue";
           </label>
         </div>
       </div>
-      <div class="cell">
-        <figure v-if="imagePreview" class="image is-square">
-          <img :src="imagePreview" alt="Image preview" style="max-width: 300px; max-height: 300px;" />
-        </figure>
-      </div>
-      <ProductsList :products="products" v-if="products.length > 0" />
     </div>
   </div>
 </template>

@@ -2,18 +2,29 @@
   <section class="card">
     <div class="card-content">
       <div class="content">
-        <datalist class="grid" v-for="(product, index) in products" :key="index">
-          <div class="cell">
-            <figure>
-              <img :src="product.image" width="256px" height="256px" />
-            </figure>
+        <div class="columns">
+          <div v-for="(product, index) in products" :key="index" class="column">
+            <img :src="product.imageUrl" style="width: 128px; height: 128px" />
+            <span class="icon-text has-text-info has-text-weight-semibold">
+              <span class="icon">
+                <i class="fas fa-tag"></i>
+              </span>
+              <span>{{ product.name }}</span>
+            </span>
+            <span class="icon-text has-text-success">
+              <span class="icon">
+                <i class="fas fa-comment-dollar"></i>
+              </span>
+              <span>{{ product.price }}</span>
+            </span>
+            <span class="icon-text has-text-warning">
+              <span class="icon">
+                <i class="fas fa-comment-dollar"></i>
+              </span>
+              <span>{{ product.location }}</span>
+            </span>
           </div>
-          <div class="cell">
-            <label>{{ product.name }}</label>
-            <p>{{ product.price }}</p>
-            <p>{{ product.location }}</p>
-          </div>
-        </datalist>
+        </div>
       </div>
     </div>
   </section>
