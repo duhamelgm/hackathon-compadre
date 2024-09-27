@@ -5,7 +5,7 @@ from fastapi import (
     status,
 )
 from config.validation_config import OutputFormat
-from model.image_recognition import ImageRecognitionAgent
+from model.image_recognition import ImageDescriptor
 
 # create the app
 path = "/compadre-image-recognition"
@@ -41,5 +41,5 @@ def predict(file: UploadFile):
 app.include_router(router)
 
 def _predict(file):
-    agent = ImageRecognitionAgent()
-    return agent.predict(file)
+    agent = ImageDescriptor()
+    return {"description":agent.describe(file)}

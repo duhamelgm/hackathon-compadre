@@ -6,3 +6,4 @@ services:
     environment:
       - ENV
       - OPENAI_API_KEY
+      - WORKERS
