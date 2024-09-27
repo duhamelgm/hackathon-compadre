@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "compadre"
+version = "0.1.0"
+description = "Hackathon project - Use Image detection to describe a Picture"
+authors = ["Jean Philippe Petit-Frere <jeanphilippe.petitfrere@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+transformers = "^4.45.1"
+einops = "^0.8.0"
+torchvision = "^0.19.1"
+pydantic = "^2.9.2"
+fastapi = "^0.115.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

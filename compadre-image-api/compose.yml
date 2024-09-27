@@ -1,0 +1,13 @@
+services:
+  image_recognition:
+    image: image_recognition
+    ports:
+      - '8000:8000'
+    environment:
+      - ENV
+      # - WORKERS
+      # - OPENAI_API_KEY
+      # - HF_TOKEN
+      # - AWS_ACCESS_KEY_ID
+      # - AWS_SECRET_ACCESS_KEY
+      # - AWS_DEFAULT_REGION
