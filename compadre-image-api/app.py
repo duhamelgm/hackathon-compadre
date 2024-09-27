@@ -4,6 +4,7 @@ from config.validation_config import OutputFormat
 from model.image_recognition import ImageDescriptor
 import io
 from PIL import Image
+from fastapi.middleware.cors import CORSMiddleware
 
 # create the app
 path = "/compadre-image-recognition"
@@ -12,6 +13,14 @@ app = FastAPI(
     description="",
     docs_url=path + "/docs",
     openapi_url=path + "/openapi.json",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 router = APIRouter(prefix=path)
