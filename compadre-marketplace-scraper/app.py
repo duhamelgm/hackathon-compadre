@@ -63,8 +63,8 @@ def crawl_facebook_marketplace(city: str, query: str):
     return facebook.main(city=city, query=query)
 
 @app.get("/crawl_amazon")
-async def crawl_amazon():
-    return await amazon.scrap()
+async def crawl_amazon(query: str):
+    return await amazon.scrap(query=query)
 
 # Create a route to the return_html endpoint.
 @app.get("/return_ip_information")

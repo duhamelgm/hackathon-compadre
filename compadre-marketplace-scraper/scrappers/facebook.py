@@ -81,6 +81,7 @@ def main(city: str, query: str):
 
               # Append the parsed data to the list.
               parsed.append({
+                  'source': 'facebook',
                   'image': image,
                   'title': title,
                   'price': price,

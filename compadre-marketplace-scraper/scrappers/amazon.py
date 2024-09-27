@@ -1,7 +1,8 @@
 import asyncio
 from playwright.async_api import async_playwright, Playwright
+import urllib.parse
 
-async def run(playwright: Playwright):
+async def run(playwright: Playwright, query: str):
     chromium = playwright.chromium # or "firefox" or "webkit".
     browser = await chromium.launch(headless=False)
     context = await browser.new_context(
@@ -13,7 +14,7 @@ async def run(playwright: Playwright):
     )
     context.set_default_timeout(5000)
     page = await context.new_page()
-    await page.goto("https://www.amazon.com/s?k=wood%2C+table%2C+oak&ref=nb_sb_noss", timeout=15000)
+    await page.goto(f"https://www.amazon.com/s?k={urllib.parse.quote_plus(query)}&ref=nb_sb_noss", timeout=30000)
 
     products = page.locator("//div[starts-with(@data-cel-widget, 'search_result_') and translate(substring(@data-cel-widget, string-length('search_result_') + 1), '0123456789', '') = '']")
     result = []
@@ -44,7 +45,7 @@ async def run(playwright: Playwright):
 
         img = product.locator("img").first
         if img:
-          product_result['img'] = await img.get_attribute('src')
+          product_result['image'] = await img.get_attribute('src')
 
         result.append(product_result)
       except Exception as e:
@@ -55,6 +56,6 @@ async def run(playwright: Playwright):
 
     return result
 
-async def scrap():
+async def scrap(query: str):
     async with async_playwright() as playwright:
-        return await run(playwright)
+        return await run(playwright, query)
