@@ -25,14 +25,19 @@ import ProductsList from "./ProductsList.vue";
     <div class="is-flex is-flex-wrap-wrap">
       <progress v-if="loadingProducts" class="progress is-medium is-info ml-2 mr-2" max="100" />
       <section v-if="loadingProducts" class="hero">
-        <div class="hero-body">
-          <p class="title">Finding the closes listings for you!</p>
-          <p class="subtitle mt-2"><i v-if="loadingProducts" class="is-success fas fa-check-square" /><span v-else
-              class="loader mr-2" />Processing the images informations
+        <div class="hero-body pt-2">
+          <p class="title">We're working on recommendations for you!</p>
+          <p class="subtitle mt-4"><i v-if="dataState.descriptionLoaded"
+              class="has-text-success fas fa-check-square mr-3" /><span v-else class="loader mr-2" />Processing the
+            images informations.
           </p>
-          <p class="subtitle mt-2"><span v-if="loadingProducts" class="loader mr-2" />Comparing with the online listings
+          <p class="subtitle mt-2"><i v-if="dataState.adsLoaded"
+              class="has-text-success fas fa-check-square mr-3" /><span v-else class="loader mr-2" />Comparing with the
+            online listings.
           </p>
-          <p class="subtitle mt-2"><span v-if="loadingProducts" class="loader mr-2" />Finding the top & closest ads</p>
+          <p class="subtitle mt-2"><i v-if="dataState.rankingCompleted"
+              class="has-text-success fas fa-check-square mr-3" /><span v-else class="loader mr-2" />Finding the top
+            recommendations.</p>
         </div>
       </section>
     </div>
@@ -141,20 +146,12 @@ export default {
     },
     stateUpdate(dataState) {
       this.dataState = { ...this.dataState, ...dataState };
-      console.log(this.dataState);
     },
     createImagePreview(file) {
       this.imagePreview = URL.createObjectURL(file);
     },
   },
   mixins: [findProducts],
-  watch: {
-    file(newFile) {
-      if (newFile) {
-        console.log("File changed: ", newFile.name)
-      }
-    }
-  },
   beforeDestroy() {
     if (this.imagePreview) {
       URL.revokeObjectURL(this.imagePreview);
