@@ -139,12 +139,12 @@ export default {
     handleProductUpload(event) {
       const selectedFile = event.target.files[0];
       if (selectedFile) {
+        this.dataState -= { descriptionLoaded: false, adsLoaded: false, rankingCompleted: false, errorOccurred: false }
         this.file = selectedFile;
         this.createImagePreview(selectedFile);
-        this.loadingProducts = true;
         this.findProducts(selectedFile, "Montréal", this.stateUpdate).then((data) => {
           this.products = data;
-        }).finally(() => this.loadingProducts = false)
+        })
       }
     },
     stateUpdate(dataState) {
