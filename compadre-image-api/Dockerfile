@@ -13,7 +13,7 @@
 # COPY . /code/.
 
 # RUN source .venv/bin/activate
-# CMD poetry run gunicorn -c config/gunicorn_conf.py --workers $WORKERS --worker-class config.custom_uvicorn_worker.CustomUvicornWorker --bind 0.0.0.0:8000 app:app
+# CMD poetry run gunicorn -c config/gunicorn_conf.py --workers 2 --worker-class config.custom_uvicorn_worker.CustomUvicornWorker --bind 0.0.0.0:8000 app:app
 FROM python:3.11-slim-bookworm
 
 # Update and install system dependencies
