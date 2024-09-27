@@ -12,46 +12,53 @@ function formatPrice(price) {
 export const findProducts = {
     methods: {
         findProducts: async function (image, cityName, updateDataState) {
-            const description = await this.getImageDescription(image);
-            updateDataState({descriptionLoaded: true});
-
-            const facebookMarketplaceResults = this.getFacebookMarketplaceProducts(description, cityName);
-            const amazonResults = this.getAmazonProducts(description, cityName);
             const results = [];
-            await Promise.all([facebookMarketplaceResults, amazonResults]).then((responses) => {
-                responses.forEach((response) => {
-                    if (response.config.url === facebookMarketPlaceUrl) {
-                        response.data.forEach((product) => {
-                            const result = {
-                                name: product.title,
-                                price: formatPrice(product.price),
-                                currency: "$CAD",
-                                imageUrl: product.image,
-                                url: "facebook.com" + product.link,
-                                source: product.source,
-                            };
-                            results.push(result);
-                        });
-                    } else if (response.config.url === amazonUrl) {
-                        response.data.forEach((product) => {
-                            const result = {
-                                name: product.title,
-                                price: formatPrice(product.price),
-                                currency: "$CAD",
-                                imageUrl: product.image,
-                                url: product.link,
-                                source: product.source,
-                            };
-                            results.push(result);
-                        });
-                    } else {
-                        console.error("Unknown url")
-                        console.error(response)
-                    }
+
+            try {
+                const description = await this.getImageDescription(image);
+                updateDataState({descriptionLoaded: true});
+
+                const facebookMarketplaceResults = this.getFacebookMarketplaceProducts(description, cityName);
+                const amazonResults = this.getAmazonProducts(description, cityName);
+                await Promise.all([facebookMarketplaceResults, amazonResults]).then((responses) => {
+                    debugger
+                    responses.forEach((response) => {
+                        if (response.config.url === facebookMarketPlaceUrl) {
+                            response.data.forEach((product) => {
+                                const result = {
+                                    name: product.title,
+                                    price: formatPrice(product.price),
+                                    currency: "$CAD",
+                                    imageUrl: product.image,
+                                    url: "facebook.com" + product.link,
+                                    source: product.source,
+                                };
+                                results.push(result);
+                            });
+                        } else if (response.config.url === amazonUrl) {
+                            response.data.forEach((product) => {
+                                const result = {
+                                    name: product.title,
+                                    price: formatPrice(product.price),
+                                    currency: "$CAD",
+                                    imageUrl: product.image,
+                                    url: product.link,
+                                    source: product.source,
+                                };
+                                results.push(result);
+                            });
+                        } else {
+                            console.error("Unknown url")
+                            console.error(response)
+                        }
+                    });
                 });
-            });
-            updateDataState({adsLoaded: true});
-            return results;
+                updateDataState({adsLoaded: true});
+                return results;
+            } catch (error) {
+                updateDataState({errorOccurred: true})
+                return results;
+            }
         },
         getImageDescription: async function (image) {
             const formData = new FormData();
@@ -59,7 +66,7 @@ export const findProducts = {
             const response = await axios.post(brainUrl, formData, {
                 headers: {
                     "Content-Type" : "multipart/form-data"
-                }});
+                }}).catch();
             let description = response.data.description;
             description = description.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
             description = description.toLowerCase();
