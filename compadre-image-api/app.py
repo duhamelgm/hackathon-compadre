@@ -59,6 +59,8 @@ async def predict(file: UploadFile):
     "/compare", status_code=status.HTTP_200_OK, response_model=ComparatorOutputFormat
 )
 async def compare(file:UploadFile, payload: str = Form(...)):
+    print(file)
+    print(payload)
     try:
         return _compare(file, payload)
     except Exception as e:
