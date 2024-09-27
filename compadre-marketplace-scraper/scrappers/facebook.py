@@ -31,7 +31,7 @@ def main(city: str, query: str):
   # Initialize the session using Playwright.
   with sync_playwright() as p:
       # Open a new browser page.
-      browser = p.chromium.launch(headless=False)
+      browser = p.chromium.launch(headless=True)
       page = browser.new_page()
       # Navigate to the URL.
       page.goto(initial_url)
@@ -59,37 +59,44 @@ def main(city: str, query: str):
       listings = soup.find_all('div', class_='x9f619 x78zum5 x1r8uery xdt5ytf x1iyjqo2 xs83m0k x1e558r4 x150jy0e x1iorvi4 xjkvuk6 xnpuxes x291uyu x1uepa24')
       print('listings find:'+str(len(listings)))
       for listing in listings:
-          try:
-              # Get the item image.
-              image = listing.find('img', class_='xt7dq6l xl1xv1r x6ikm8r x10wlt62 xh8yej3')['src']
-              print('image: '+image)
-              # Get the item title from span.
-              title = listing.find('span', 'x1lliihq x6ikm8r x10wlt62 x1n2onr6').text
-              print('title: '+title)                
-              # Get the item price.
-              price = listing.find('span', 'x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xudqn12 x676frb x1lkfr7t x1lbecb7 x1s688f xzsf02u').text
-              print('price: '+price)       
-              # Get the item URL.
-              #post_url = listing.find('a', class_='x1i10hfl xjbqb8w x1ejq31n xd10rxx x1sy0etr x17r0tee x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz x1heor9g x1sur9pj xkrqix3 x1s688f x1lku1pv')
-              #post_url = listing.find('a', class_='x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz x1heor9g x1lku1pv')['href']
-              #print('post_url: '+post_url)       
-              
-              # Get the item location.
-              #location = listing.find('span', 'x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x4zkp8e x676frb x1nxh6w3 x1sibtaa xo1l8bm xi81zsa').text
-              #location = listing.find('span', 'x1lliihq x6ikm8r x10wlt62 x1n2onr6 xlyipyv xuxw1ft x1j85h84').text
-              #print('location: '+location)       
+        if not listing:
+            next
+        try:
+            # Get the item image.
+            if listing.find('img', class_='xt7dq6l xl1xv1r x6ikm8r x10wlt62 xh8yej3'):
+                image = listing.find('img', class_='xt7dq6l xl1xv1r x6ikm8r x10wlt62 xh8yej3')['src']
+            print('image: '+image)
+            # Get the item title from span.
+            if listing.find('span', 'x1lliihq x6ikm8r x10wlt62 x1n2onr6'):
+                title = listing.find('span', 'x1lliihq x6ikm8r x10wlt62 x1n2onr6').text
+            print('title: '+title)                
+            # Get the item price.
+            price = "0"
+            if listing.find('span', 'x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xudqn12 x676frb x1lkfr7t x1lbecb7 x1s688f xzsf02u'):
+                price = listing.find('span', 'x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xudqn12 x676frb x1lkfr7t x1lbecb7 x1s688f xzsf02u').text
+            print('price: '+price)       
+            # Get the item URL.
+            #post_url = listing.find('a', class_='x1i10hfl xjbqb8w x1ejq31n xd10rxx x1sy0etr x17r0tee x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz x1heor9g x1sur9pj xkrqix3 x1s688f x1lku1pv')
+            #post_url = listing.find('a', class_='x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz x1heor9g x1lku1pv')['href']
+            #print('post_url: '+post_url)       
+            
+            # Get the item location.
+            #location = listing.find('span', 'x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x4zkp8e x676frb x1nxh6w3 x1sibtaa xo1l8bm xi81zsa').text
+            #location = listing.find('span', 'x1lliihq x6ikm8r x10wlt62 x1n2onr6 xlyipyv xuxw1ft x1j85h84').text
+            #print('location: '+location)       
 
-              # Append the parsed data to the list.
-              parsed.append({
-                  'source': 'facebook',
-                  'image': image,
-                  'title': title,
-                  'price': price,
-                  #'post_url': post_url,
-                  'location': city
-              })
-          except:
-              pass
+            # Append the parsed data to the list.
+            parsed.append({
+                'source': 'facebook',
+                'image': image,
+                'title': title,
+                'price': price,
+                #'post_url': post_url,
+                'location': city
+            })
+        except Exception as e:
+            print(e)
+            pass
       # Close the browser.
       browser.close()
       # Return the parsed data as a JSON.
