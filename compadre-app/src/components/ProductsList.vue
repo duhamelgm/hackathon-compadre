@@ -9,35 +9,29 @@
                 <img :src="product.imageUrl" width="100%" style="min-width: 120px; max-width: 120px;" class="imgBox" />
               </div>
               <div class="is-flex is-flex-direction-column">
-                <div class="is-flex">
-                  <span class="icon-text has-text-info has-text-weight-semibold">
+                <span class="icon-text has-text-info has-text-weight-semibold">
+                  <span class="icon">
+                    <i class="fas fa-tag"></i>
+                  </span>
+                  <span class="textWrapped">{{ product.name }}</span>
+                  <span v-if="[0, 1, 2].includes(index)" class="icon-text has-text-warning">
                     <span class="icon">
-                      <i class="fas fa-tag"></i>
-                    </span>
-                    <span>{{ product.name }}</span>
-                    <span v-if="[0, 1, 2].includes(index)" class="icon-text has-text-warning">
-                      <span class="icon">
-                        <i class="fas fa-star"></i>
-                      </span>
+                      <i class="fas fa-star"></i>
                     </span>
                   </span>
-                </div>
-                <div class="is-flex">
-                  <span class="icon-text has-text-success">
-                    <span class="icon">
-                      <i class="fas fa-comment-dollar"></i>
-                    </span>
-                    <span>{{ product.price === 0 ? "Free" : "$ " + product.price }}</span>
+                </span>
+                <span class="icon-text has-text-success">
+                  <span class="icon">
+                    <i class="fas fa-comment-dollar"></i>
                   </span>
-                </div>
-                <div class="is-flex">
-                  <span class="icon-text has-text-warning">
-                    <span class="icon">
-                      <i class="fas fa-store"></i>
-                    </span>
-                    <span>{{ product.source }}</span>
+                  <span>{{ product.price === 0 ? "Free" : "$ " + product.price }}</span>
+                </span>
+                <span class="icon-text has-text-warning">
+                  <span class="icon">
+                    <i class="fas fa-store"></i>
                   </span>
-                </div>
+                  <span>{{ product.source }}</span>
+                </span>
               </div>
             </a>
           </div>
@@ -62,6 +56,16 @@
     max-height: unset;
     margin: 0 2rem 6rem;
   }
+}
+
+.textWrapped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+
 }
 </style>
 
