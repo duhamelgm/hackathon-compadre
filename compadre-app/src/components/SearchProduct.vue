@@ -24,13 +24,6 @@ import ProductsList from "./ProductsList.vue";
 
     <div class="is-flex is-flex-direction-row">
       <div v-if="file" class="is-flex is-align-items-center" :style="{ gap: '2em' }">
-        <div class="is-flex is-flex-direction-column is-align-self-flex-start">
-          <label class="is-flex is-align-self-center">Product</label>
-          <figure class="is-flex" v-if="imagePreview">
-            <img :src="imagePreview" alt="Image preview" style="max-width: 300px; max-height: 300px;" />
-          </figure>
-          <p v-else>No image preview available.</p>
-        </div>
         <div class="is-flex">
           <ProductsList :products="products" v-if="products.length > 0" />
         </div>
