@@ -49,6 +49,13 @@
 .products-content .content {
   margin: 0;
 }
+
+@media (max-width: 1024px) {
+  .products-content {
+    max-height: unset;
+    margin: 0 2rem 6rem;
+  }
+}
 </style>
 
 <script>

@@ -44,6 +44,17 @@ import ProductsList from "./ProductsList.vue";
   gap: 2rem;
 }
 
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    overflow: scroll;
+  }
+
+  .image-file-input {
+    margin: auto;
+  }
+}
+
 .image-file-input {
   display: flex;
   flex-direction: column;
