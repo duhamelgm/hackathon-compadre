@@ -6,7 +6,7 @@
           <div class="is-flex is-flex-direction-row" v-for="(product, index) in products" :key="index">
             <div class="is-flex">
               <img :src="product.imageUrl" style="width: 128px; height: 128px" />
-            </div <div class="is-flex is-flex-direction-column">
+            </div>
             <div class="is-flex is-flex-direction-column">
               <div class="is-flex">
                 <span class="icon-text has-text-info has-text-weight-semibold">
